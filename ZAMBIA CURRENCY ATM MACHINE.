@@ -1,0 +1,42 @@
+import random
+
+class ATM:
+    def __init__(self):
+        self.notes = {
+            10: 100,
+            20: 100,
+            50: 100,
+            100: 100,
+            200: 100,
+            500: 100
+        }
+        self.coins = {
+            1: 100,
+            2: 100,
+            5: 100
+        }
+
+    def check_balance(self, amount):
+        if amount > self.get_total_balance():
+            return False
+        return True
+
+    def get_total_balance(self):
+        total = sum([note * quantity for note, quantity in self.notes.items()])
+        total += sum([coin * quantity for coin, quantity in self.coins.items()])
+        return total
+
+    def dispense_notes(self, amount):
+        notes_to_dispense = {}
+        denominations = [500, 200, 100, 50, 20, 10]
+        for denomination in denominations:
+            if amount >= denomination and self.notes[denomination] > 0:
+                notes_to_dispense[denomination] = min(amount // denomination, self.notes[denomination])
+                amount -= notes_to_dispense[denomination] * denomination
+        if amount > 0:
+            return None
+        for denomination, quantity in notes_to_dispense.items():
+            self.notes[denomination] -= quantity
+        return notes_to_dispense
+
+    def dispense_coins(self,
