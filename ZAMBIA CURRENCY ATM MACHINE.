@@ -1,4 +1,38 @@
-import random
+```markdown
+# ATM Operations Service - Example
+
+This example provides a small FastAPI service that runs ATM diagnostics and notifies teams when failures occur.
+
+Files:
+- app/main.py - FastAPI entrypoint (run diagnostics, status, send alerts)
+- atm/atm.py - Diagnostic logic (simulated checks to replace with hardware calls)
+- atm/notifications.py - Notification manager (Slack, Email, SMS placeholder)
+- atm/config.py - Team/contact mapping and thresholds
+- atm/logger.py - Lightweight logger
+- requirements.txt
+
+How to run:
+1. Create a Python 3.10+ virtualenv and install deps:
+   pip install -r requirements.txt
+
+2. Edit atm/config.py to provide real SMTP credentials and Slack/Twilio endpoints.
+
+3. Start the service:
+   python app/main.py
+
+4. Call endpoints:
+   - GET /health
+   - POST /diagnostics/run
+   - GET /diagnostics/status
+   - POST /alerts/send
+
+Security & production notes:
+- Store credentials in a secrets manager (do NOT commit them).
+- Serve only on trusted networks or behind a VPN.
+- Add authentication (mTLS, API keys).
+- Integrate with monitoring/metrics (Prometheus) and persistent logs (ELK).
+- Replace simulated checks with calls to the ATM vendor SDK/drivers for cassettes, dispensers, sensors, and host.
+```import random
 
 class ATM:
     def __init__(self):
